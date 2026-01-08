@@ -31,7 +31,7 @@
                 <td>4.5</td>
                 <td>Active</td>
                 <td class="text-center">
-                <div class="btn btn-primary">Edit</div> ||
+                <div class="btn btn-primary" (click)="onEdit(item)">Edit</div> ||
                 <div class="btn btn-danger" (click)="onDelete(item.id)">Delete</div>
                 </td>
             </tr>
@@ -88,4 +88,4 @@
       </form>
     </div>
   </div>
-</div>
+</div> 
