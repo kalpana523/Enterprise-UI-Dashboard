@@ -7,6 +7,9 @@
             <div class="btn btn-warning" (click)="openModal()">Add Product</div>
         </div>
     </div>
+    @if(productList && productList.length > 0) {
+
+    
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
@@ -21,8 +24,8 @@
         <tbody>
             @for (item of productList; track $index) {
             <tr>
-                <td>{{item.productName}}</td>
-                <td>{{item.price}}</td>
+                <td>{{item.productName | uppercase}}</td>
+                <td>{{item.price | currency}}</td>
                 <td>{{item.description}}</td>
                 <td>{{item.rating}}</td>
                 <td>{{item.status}}</td>
@@ -37,7 +40,12 @@
             </tr>
         }
         </tbody>
+
     </table>
+}
+@else {
+    <h5 class="text-center">No Record found.</h5>
+}
 </div>
 
 <!-- The Modal -->
@@ -47,6 +55,12 @@
 
       <!-- Modal Header -->
       <div class="modal-header bg-info">
+        @if(productForm.value.id != 0) {
+            <h4 class="modal-title">Update Product</h4>
+        }@else {
+           <h4 class="modal-title">Add Product</h4> 
+        }
+
         <h4 class="modal-title">Add Product</h4>
         <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="closeModal()"></button>
       </div>
@@ -82,7 +96,12 @@
 
       <!-- Modal footer -->
       <div class="modal-footer">
-        <button [disabled]="this.productForm.invalid" type="button" class="btn btn-primary" data-bs-dismiss="modal">Save</button>
+        @if (productForm.value.id == 0) {
+            <button [disabled]="this.productForm.invalid" type="submit" class="btn btn-primary" data-bs-dismiss="modal">Save</button>
+        }
+        @else{
+            <button [disabled]="this.productForm.invalid" type="submit" class="btn btn-success" data-bs-dismiss="modal">Update</button>
+        }
         <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="closeModal()">Close</button>
       </div>
       </form>
