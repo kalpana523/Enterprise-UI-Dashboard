@@ -21,7 +21,7 @@ constructor(private fb:FormBuilder){
 
 }
 ngOnInit():void{
-  this.setFormState();
+  this.setFormSet();
   this.getProduct()
 
 }
@@ -34,13 +34,14 @@ ngOnInit():void{
   }
   closeModal()
   {
+    this.setFormSet();
   if(this.modal != null)
   {
   this.modal.nativeElement.style.display= 'none'
   }
   }
 
-  setFormState()
+  setFormSet()
   {
     this.productForm = this.fb.group({
       id:[0],
@@ -73,10 +74,23 @@ ngOnInit():void{
       this.productList = res;
     })
   }
+
+  onEdit(product:Product)
+  {
+     this.openModal()
+     this.productForm.patchValue(product)
+  }
   onDelete(id:number){
-    this.prodService.deleteProduct(id).subscribe
+    const isConfirm = confirm("Are you sure you want to delete this record ?");
+    if(isConfirm)
+    {
+      this.prodService.deleteProduct(id).subscribe
 ((res)=>{
   alert("product deleted successfully");
   this.getProduct();
-})  }
+}) }
+  else{
+    alert("You select NO option.")
+  }
+}
 }
